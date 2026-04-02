@@ -108,7 +108,7 @@ This version does not contribute custom VS Code settings yet.
 
 ## Release Notes
 
-### 0.0.4
+### 0.0.5
 
 - Published marketplace version
 - Sidebar-based chat workflow
