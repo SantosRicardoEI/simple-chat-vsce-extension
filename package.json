@@ -2,7 +2,7 @@
   "name": "simple-chat",
   "displayName": "Simple Chat",
   "description": "Real-time group chat in the VS Code sidebar",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "license": "MIT",
   "publisher": "SantosEI",
   "icon": "media/logo.png",
@@ -18,6 +18,7 @@
   ],
   "activationEvents": [
     "onView:terminalChatView"
+  
   ],
   "main": "./out/extension.js",
   "contributes": {
