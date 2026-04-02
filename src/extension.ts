@@ -8,10 +8,10 @@ export function activate(context: vscode.ExtensionContext) {
   );
 }
 
-export function deactivate() { }
+export function deactivate() {}
 
 class TerminalChatViewProvider implements vscode.WebviewViewProvider {
-  constructor(private readonly context: vscode.ExtensionContext) { }
+  constructor(private readonly context: vscode.ExtensionContext) {}
 
   resolveWebviewView(webviewView: vscode.WebviewView): void {
     webviewView.webview.options = {
@@ -27,7 +27,7 @@ class TerminalChatViewProvider implements vscode.WebviewViewProvider {
         if (!editor) {
           webviewView.webview.postMessage({
             type: 'selection_error',
-            error: 'Não há editor activo.',
+            error: 'There is no active editor.',
           });
           return;
         }
@@ -37,7 +37,7 @@ class TerminalChatViewProvider implements vscode.WebviewViewProvider {
         if (!selectedText.trim()) {
           webviewView.webview.postMessage({
             type: 'selection_error',
-            error: 'Não tens nenhum texto seleccionado.',
+            error: 'No text is currently selected.',
           });
           return;
         }
@@ -54,7 +54,7 @@ class TerminalChatViewProvider implements vscode.WebviewViewProvider {
 function getWebviewHtml(): string {
   return `
     <!DOCTYPE html>
-    <html lang="pt-PT">
+    <html lang="en">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -271,13 +271,6 @@ function getWebviewHtml(): string {
           font-weight: 700;
         }
 
-        .hint {
-          font-size: 12px;
-          opacity: 0.8;
-          margin-top: 8px;
-          line-height: 1.4;
-        }
-
         .composer-card {
           display: flex;
           flex-direction: column;
@@ -293,7 +286,8 @@ function getWebviewHtml(): string {
         .bottom-actions button {
           margin-top: 0;
         }
-                  .message-header {
+
+        .message-header {
           display: flex;
           justify-content: space-between;
           align-items: flex-start;
@@ -394,9 +388,9 @@ function getWebviewHtml(): string {
           <div class="connection-header">
             <div class="title-row" style="margin-bottom: 0; flex: 1;">
               <h1>Simple Chat</h1>
-              <div id="status" class="status disconnected">Desligado</div>
+              <div id="status" class="status disconnected">Disconnected</div>
             </div>
-            <button id="toggleConnectionBtn" class="toggle-btn" type="button">Ocultar</button>
+            <button id="toggleConnectionBtn" class="toggle-btn" type="button">Hide</button>
           </div>
 
           <div id="connectionBody" class="connection-body">
@@ -406,15 +400,15 @@ function getWebviewHtml(): string {
             </div>
 
             <div class="field">
-              <label for="mode">Ação</label>
+              <label for="mode">Action</label>
               <select id="mode">
-                <option value="join">Entrar em sala</option>
-                <option value="create">Criar sala</option>
+                <option value="join">Join room</option>
+                <option value="create">Create room</option>
               </select>
             </div>
 
             <div class="field">
-              <label for="roomCode">Código da sala</label>
+              <label for="roomCode">Room code</label>
               <input id="roomCode" type="text" />
             </div>
 
@@ -423,7 +417,7 @@ function getWebviewHtml(): string {
               <input id="password" type="password" />
             </div>
 
-            <button id="connectBtn">Ligar</button>
+            <button id="connectBtn">Connect</button>
           </div>
         </div>
 
@@ -432,11 +426,11 @@ function getWebviewHtml(): string {
         </div>
 
         <div class="card composer-card">
-          <textarea id="messageInput" placeholder="Escreve uma mensagem..."></textarea>
-          <button id="sendBtn">Enviar</button>
+          <textarea id="messageInput" placeholder="Write a message..."></textarea>
+          <button id="sendBtn">Send</button>
           <div class="bottom-actions">
-            <button id="onlineBtn" class="secondary">Ver online</button>
-            <button id="insertSelectionBtn" class="secondary">Inserir seleção</button>
+            <button id="onlineBtn" class="secondary">Show online users</button>
+            <button id="insertSelectionBtn" class="secondary">Insert selection</button>
           </div>
         </div>
       </div>
@@ -477,15 +471,6 @@ function getWebviewHtml(): string {
           scrollMessagesToBottom();
         }
 
-                function escapeHtml(text) {
-          return text
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-        }
-
         function shouldCollapseMessage(content) {
           return content.length > 400 || content.split("\\n").length > 8;
         }
@@ -494,7 +479,7 @@ function getWebviewHtml(): string {
           try {
             await navigator.clipboard.writeText(text);
             const previousTitle = button.title;
-            button.title = "Copiado";
+            button.title = "Copied";
             button.style.opacity = "0.7";
 
             setTimeout(() => {
@@ -502,21 +487,21 @@ function getWebviewHtml(): string {
               button.style.opacity = "1";
             }, 900);
           } catch {
-            addInfoMessage("[erro] Não foi possível copiar a mensagem.", "error");
+            addInfoMessage("[error] Could not copy the message.", "error");
           }
         }
 
-        function buildMessageActions(content) {
+        function buildMessageActions() {
           return \`
             <div class="message-actions">
-              <button class="icon-btn copy-btn" type="button" title="Copiar mensagem">
+              <button class="icon-btn copy-btn" type="button" title="Copy message">
                 <span class="copy-icon"></span>
               </button>
             </div>
           \`;
         }
 
-                function renderChatMessage(msg) {
+        function renderChatMessage(msg) {
           const wrapper = document.createElement("div");
           wrapper.className = "message " + (msg.type === "system" ? "system" : "chat");
 
@@ -541,7 +526,7 @@ function getWebviewHtml(): string {
           if (msg.type === "system") {
             const tagEl = document.createElement("span");
             tagEl.className = "system-tag";
-            tagEl.textContent = "[sistema]";
+            tagEl.textContent = "[system]";
             meta.appendChild(tagEl);
           } else {
             const userEl = document.createElement("span");
@@ -553,7 +538,7 @@ function getWebviewHtml(): string {
           header.appendChild(meta);
 
           const actions = document.createElement("div");
-          actions.innerHTML = buildMessageActions(fullContent);
+          actions.innerHTML = buildMessageActions();
           header.appendChild(actions.firstElementChild);
 
           const contentEl = document.createElement("div");
@@ -573,17 +558,17 @@ function getWebviewHtml(): string {
             const toggleBtn = document.createElement("button");
             toggleBtn.type = "button";
             toggleBtn.className = "text-btn";
-            toggleBtn.textContent = "Ver mais";
+            toggleBtn.textContent = "Show more";
 
             toggleBtn.addEventListener("click", () => {
               const isCollapsed = contentEl.classList.contains("collapsed");
 
               if (isCollapsed) {
                 contentEl.classList.remove("collapsed");
-                toggleBtn.textContent = "Ver menos";
+                toggleBtn.textContent = "Show less";
               } else {
                 contentEl.classList.add("collapsed");
-                toggleBtn.textContent = "Ver mais";
+                toggleBtn.textContent = "Show more";
               }
             });
 
@@ -605,13 +590,13 @@ function getWebviewHtml(): string {
         function collapseConnectionPanel() {
           connectionCollapsed = true;
           connectionBody.classList.add("hidden");
-          toggleConnectionBtn.textContent = "Mostrar";
+          toggleConnectionBtn.textContent = "Show";
         }
 
         function expandConnectionPanel() {
           connectionCollapsed = false;
           connectionBody.classList.remove("hidden");
-          toggleConnectionBtn.textContent = "Ocultar";
+          toggleConnectionBtn.textContent = "Hide";
         }
 
         async function connectToRoom() {
@@ -621,12 +606,12 @@ function getWebviewHtml(): string {
           const password = document.getElementById("password").value;
 
           if (!username || !roomCode) {
-            addInfoMessage("[erro] Username e código da sala são obrigatórios.", "error");
+            addInfoMessage("[error] Username and room code are required.", "error");
             return;
           }
 
           connectBtn.disabled = true;
-          setStatus("connecting", "A ligar...");
+          setStatus("connecting", "Connecting...");
 
           try {
             if (mode === "create") {
@@ -639,8 +624,8 @@ function getWebviewHtml(): string {
               const createData = await createRes.json();
 
               if (!createData.ok) {
-                addInfoMessage(\`[erro] \${createData.error}\`, "error");
-                setStatus("disconnected", "Desligado");
+                addInfoMessage(\`[error] \${createData.error}\`, "error");
+                setStatus("disconnected", "Disconnected");
                 connectBtn.disabled = false;
                 return;
               }
@@ -655,14 +640,14 @@ function getWebviewHtml(): string {
             const joinData = await joinRes.json();
 
             if (!joinData.ok) {
-              addInfoMessage(\`[erro] \${joinData.error}\`, "error");
-              setStatus("disconnected", "Desligado");
+              addInfoMessage(\`[error] \${joinData.error}\`, "error");
+              setStatus("disconnected", "Disconnected");
               connectBtn.disabled = false;
               return;
             }
 
             messagesEl.innerHTML = "";
-            addInfoMessage(\`Ligado à sala: \${roomCode}\`, "info");
+            addInfoMessage(\`Connected to room: \${roomCode}\`, "info");
 
             for (const msg of joinData.messages || []) {
               renderChatMessage(msg);
@@ -682,7 +667,7 @@ function getWebviewHtml(): string {
                 password
               }));
 
-              setStatus("connected", "Ligado");
+              setStatus("connected", "Connected");
               connectBtn.disabled = false;
               collapseConnectionPanel();
             };
@@ -693,7 +678,7 @@ function getWebviewHtml(): string {
               if (parsed.type === "join_success") return;
 
               if (parsed.type === "join_error" || parsed.type === "error") {
-                addInfoMessage(\`[erro] \${parsed.error}\`, "error");
+                addInfoMessage(\`[error] \${parsed.error}\`, "error");
                 return;
               }
 
@@ -708,30 +693,30 @@ function getWebviewHtml(): string {
               }
 
               if (parsed.type === "system") {
-                addInfoMessage(\`[sistema] \${parsed.message}\`, "info");
+                addInfoMessage(\`[system] \${parsed.message}\`, "info");
               }
             };
 
             ws.onclose = () => {
-              setStatus("disconnected", "Desligado");
-              addInfoMessage("[sistema] Ligação fechada.", "info");
+              setStatus("disconnected", "Disconnected");
+              addInfoMessage("[system] Connection closed.", "info");
             };
 
             ws.onerror = () => {
-              setStatus("disconnected", "Desligado");
-              addInfoMessage("[erro] Erro na ligação WebSocket.", "error");
+              setStatus("disconnected", "Disconnected");
+              addInfoMessage("[error] WebSocket connection error.", "error");
               connectBtn.disabled = false;
             };
           } catch (error) {
-            addInfoMessage("[erro] Falha ao ligar ao servidor.", "error");
-            setStatus("disconnected", "Desligado");
+            addInfoMessage("[error] Failed to connect to the server.", "error");
+            setStatus("disconnected", "Disconnected");
             connectBtn.disabled = false;
           }
         }
 
         function sendMessage() {
           if (!ws || ws.readyState !== WebSocket.OPEN) {
-            addInfoMessage("[erro] Não estás ligado.", "error");
+            addInfoMessage("[error] You are not connected.", "error");
             return;
           }
 
@@ -751,7 +736,7 @@ function getWebviewHtml(): string {
 
         onlineBtn.addEventListener("click", () => {
           if (!ws || ws.readyState !== WebSocket.OPEN) {
-            addInfoMessage("[erro] Não estás ligado.", "error");
+            addInfoMessage("[error] You are not connected.", "error");
             return;
           }
 
@@ -768,7 +753,7 @@ function getWebviewHtml(): string {
           const message = event.data;
 
           if (message.type === "selection_error") {
-            addInfoMessage(\`[erro] \${message.error}\`, "error");
+            addInfoMessage(\`[error] \${message.error}\`, "error");
             return;
           }
 

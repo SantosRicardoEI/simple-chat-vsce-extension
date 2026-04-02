@@ -2,16 +2,16 @@
   "name": "simple-chat",
   "displayName": "Simple Chat",
   "description": "Group chat for VS Code",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
-  "publisher": "TEU_PUBLISHER",
+  "publisher": "METE_AQUI_O_TEU_PUBLISHER",
   "engines": {
     "vscode": "^1.110.0"
   },
-    "repository": {
+  "repository": {
     "type": "git",
-    "url": ""
-  },  
+    "url": "https://github.com/TEU_USER/TEU_REPO.git"
+  },
   "categories": [
     "Other"
   ],
@@ -46,10 +46,6 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TEU_USER/TEU_REPO.git"
   },
   "devDependencies": {
     "@types/vscode": "^1.110.0",
