@@ -1,10 +1,11 @@
 {
   "name": "simple-chat",
   "displayName": "Simple Chat",
-  "description": "Group chat for VS Code",
-  "version": "0.0.5",
+  "description": "Real-time group chat in the VS Code sidebar",
+  "version": "0.0.6",
   "license": "MIT",
   "publisher": "SantosEI",
+  "icon": "media/logo.png",
   "engines": {
     "vscode": "^1.110.0"
   },
@@ -56,5 +57,17 @@
     "typescript": "^5.9.3",
     "@vscode/test-cli": "^0.0.12",
     "@vscode/test-electron": "^2.5.2"
-  }
+  },
+  "keywords": [
+    "chat",
+    "group chat",
+    "messaging",
+    "real-time",
+    "websocket",
+    "collaboration",
+    "sidebar",
+    "code sharing",
+    "team chat",
+    "room chat"
+  ]
 }
