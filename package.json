@@ -1,0 +1,64 @@
+{
+  "name": "simple-chat",
+  "displayName": "Simple Chat",
+  "description": "Group chat for VS Code",
+  "version": "0.0.2",
+  "license": "MIT",
+  "publisher": "TEU_PUBLISHER",
+  "engines": {
+    "vscode": "^1.110.0"
+  },
+    "repository": {
+    "type": "git",
+    "url": ""
+  },  
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:terminalChatView"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "simpleChat",
+          "title": "Simple Chat",
+          "icon": "media/chat.svg"
+        }
+      ]
+    },
+    "views": {
+      "simpleChat": [
+        {
+          "type": "webview",
+          "id": "terminalChatView",
+          "name": "Chat"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TEU_USER/TEU_REPO.git"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.110.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.56.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
